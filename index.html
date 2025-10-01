@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cifrado César</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f3f3;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+            width: 400px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        textarea, input {
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #aaa;
+        }
+        button {
+            width: 48%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin: 5px 1%;
+            cursor: pointer;
+            font-weight: bold;
+            color: white;
+        }
+        .cifrar {
+            background: #28a745;
+        }
+        .descifrar {
+            background: #007bff;
+        }
+        .resultado {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            min-height: 50px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cifrado César</h1>
+
+        <label for="mensaje">Mensaje:</label>
+        <textarea id="mensaje" rows="4" placeholder="Escribe tu mensaje aquí..."></textarea>
+
+        <label for="desplazamiento">Desplazamiento:</label>
+        <input type="number" id="desplazamiento" value="3" min="1" max="25">
+
+        <div>
+            <button class="cifrar" onclick="cifrar()">Cifrar</button>
+            <button class="descifrar" onclick="descifrar()">Descifrar</button>
+        </div>
+
+        <h3>Resultado:</h3>
+        <div class="resultado" id="resultado"></div>
+    </div>
+
+    <script>
+        function cifrar() {
+            let mensaje = document.getElementById("mensaje").value;
+            let desplazamiento = parseInt(document.getElementById("desplazamiento").value);
+            let resultado = "";
+
+            for (let i = 0; i < mensaje.length; i++) {
+                let char = mensaje[i];
+
+                if (char.match(/[a-z]/i)) {
+                    let codigo = mensaje.charCodeAt(i);
+
+                    // Mayúsculas
+                    if (codigo >= 65 && codigo <= 90) {
+                        char = String.fromCharCode(((codigo - 65 + desplazamiento) % 26) + 65);
+                    }
+                    // Minúsculas
+                    else if (codigo >= 97 && codigo <= 122) {
+                        char = String.fromCharCode(((codigo - 97 + desplazamiento) % 26) + 97);
+                    }
+                }
+                resultado += char;
+            }
+
+            document.getElementById("resultado").innerText = resultado;
+        }
+
+        function descifrar() {
+            let mensaje = document.getElementById("mensaje").value;
+            let desplazamiento = parseInt(document.getElementById("desplazamiento").value);
+            let resultado = "";
+
+            for (let i = 0; i < mensaje.length; i++) {
+                let char = mensaje[i];
+
+                if (char.match(/[a-z]/i)) {
+                    let codigo = mensaje.charCodeAt(i);
+
+                    // Mayúsculas
+                    if (codigo >= 65 && codigo <= 90) {
+                        char = String.fromCharCode(((codigo - 65 - desplazamiento + 26) % 26) + 65);
+                    }
+                    // Minúsculas
+                    else if (codigo >= 97 && codigo <= 122) {
+                        char = String.fromCharCode(((codigo - 97 - desplazamiento + 26) % 26) + 97);
+                    }
+                }
+                resultado += char;
+            }
+
+            document.getElementById("resultado").innerText = resultado;
+        }
+    </script>
+</body>
+</html>
